@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "https://gsongsong.github.io/antd-table-dnd-sortable/static/css/main.22b6e383.chunk.css",
+    "main.js": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/main.4750f95c.chunk.js",
+    "main.js.map": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/main.4750f95c.chunk.js.map",
+    "runtime-main.js": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/runtime-main.afcba212.js",
+    "runtime-main.js.map": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/runtime-main.afcba212.js.map",
+    "static/css/2.af9592cd.chunk.css": "https://gsongsong.github.io/antd-table-dnd-sortable/static/css/2.af9592cd.chunk.css",
+    "static/js/2.9c7c551f.chunk.js": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/2.9c7c551f.chunk.js",
+    "static/js/2.9c7c551f.chunk.js.map": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/2.9c7c551f.chunk.js.map",
+    "static/js/3.880c101e.chunk.js": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/3.880c101e.chunk.js",
+    "static/js/3.880c101e.chunk.js.map": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/3.880c101e.chunk.js.map",
+    "index.html": "https://gsongsong.github.io/antd-table-dnd-sortable/index.html",
+    "static/css/2.af9592cd.chunk.css.map": "https://gsongsong.github.io/antd-table-dnd-sortable/static/css/2.af9592cd.chunk.css.map",
+    "static/css/main.22b6e383.chunk.css.map": "https://gsongsong.github.io/antd-table-dnd-sortable/static/css/main.22b6e383.chunk.css.map",
+    "static/js/2.9c7c551f.chunk.js.LICENSE.txt": "https://gsongsong.github.io/antd-table-dnd-sortable/static/js/2.9c7c551f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.afcba212.js",
+    "static/css/2.af9592cd.chunk.css",
+    "static/js/2.9c7c551f.chunk.js",
+    "static/css/main.22b6e383.chunk.css",
+    "static/js/main.4750f95c.chunk.js"
+  ]
+}
