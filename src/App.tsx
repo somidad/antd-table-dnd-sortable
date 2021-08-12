@@ -113,12 +113,23 @@ function App() {
   }
 
   function DraggableRow(props: any) {
-    const { attributes, listeners, setNodeRef } = useSortable({
+    const { attributes, listeners, setNodeRef, isDragging, overIndex, index } = useSortable({
       id: props["data-row-key"],
     });
+    const isOver = overIndex === index
     const { children, ...restProps } = props;
+    const style = {
+      ...restProps?.style,
+      ...(isDragging ? { background: "#80808038" } : {}),
+      ...(isOver ? { borderTop: "5px solid #ec161638" } : {})
+    }
     return (
-      <tr ref={setNodeRef} {...attributes} {...restProps}>
+      <tr
+        ref={setNodeRef}
+        {...attributes}
+        {...restProps}
+        style={style}
+      >
         {children.map((child: any) => {
           const { children, key, ...restProps } = child;
           return key === "dragHandle" ? (
