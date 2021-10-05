@@ -95,9 +95,13 @@ function App() {
 
   function DraggableWrapper(props: any) {
     const { children, ...restProps } = props;
-    return (
+    /**
+     * 'children[1]` is `dataSource`
+     * Check if `children[1]` is an array
+     * because antd gives 'No Data' element when `dataSource` is an empty array
+     */
+    return children[1] instanceof Array ? (
       <SortableContext
-        // `children[1]` is `dataSource`.
         items={children[1].map((child: any) => child.key)}
         strategy={verticalListSortingStrategy}
         {...restProps}
@@ -109,6 +113,10 @@ function App() {
           }
         </tbody>
       </SortableContext>
+    ) : (
+      <tbody {...restProps}>
+        {children}
+      </tbody>
     );
   }
 
@@ -123,7 +131,12 @@ function App() {
       ...(isDragging ? { background: "#80808038" } : {}),
       ...(isOver ? { borderTop: "5px solid #ec161638" } : {})
     }
-    return (
+    /**
+     * 'children[1]` is a row of `dataSource`
+     * Check if `children[1]` is an array
+     * because antd gives 'No Data' element when `dataSource` is an empty array
+     */
+    return children[1] instanceof Array ? (
       <tr
         ref={setNodeRef}
         {...attributes}
@@ -140,6 +153,10 @@ function App() {
             <td {...restProps}>{child}</td>
           );
         })}
+      </tr>
+    ) : (
+      <tr {...restProps}>
+        {children}
       </tr>
     );
   }
