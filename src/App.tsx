@@ -100,9 +100,9 @@ function App() {
      * Check if `children[1]` is an array
      * because antd gives 'No Data' element when `dataSource` is an empty array
      */
-    return children[1] instanceof Array ? (
+    return (
       <SortableContext
-        items={children[1].map((child: any) => child.key)}
+        items={children[1] instanceof Array ? children[1].map((child: any) => child.key) : []}
         strategy={verticalListSortingStrategy}
         {...restProps}
       >
@@ -113,10 +113,6 @@ function App() {
           }
         </tbody>
       </SortableContext>
-    ) : (
-      <tbody {...restProps}>
-        {children}
-      </tbody>
     );
   }
 
@@ -126,37 +122,40 @@ function App() {
     });
     const isOver = overIndex === index
     const { children, ...restProps } = props;
+    const isData = children instanceof Array;
     const style = {
       ...restProps?.style,
-      ...(isDragging ? { background: "#80808038" } : {}),
-      ...(isOver ? { borderTop: "5px solid #ec161638" } : {})
+      ...(isData && isDragging ? { background: "#80808038" } : {}),
+      ...(isData && isOver ? { borderTop: "5px solid #ec161638" } : {})
     }
     /**
      * 'children[1]` is a row of `dataSource`
      * Check if `children[1]` is an array
      * because antd gives 'No Data' element when `dataSource` is an empty array
      */
-    return children[1] instanceof Array ? (
+    return (
       <tr
         ref={setNodeRef}
         {...attributes}
         {...restProps}
         style={style}
       >
-        {children.map((child: any) => {
-          const { children, key, ...restProps } = child;
-          return key === "dragHandle" ? (
-            <td {...listeners} {...restProps}>
-              {child}
-            </td>
+        {
+          children instanceof Array ? (
+            children.map((child: any) => {
+              const { children, key, ...restProps } = child;
+              return key === "dragHandle" ? (
+                <td {...listeners} {...restProps}>
+                  {child}
+                </td>
+              ) : (
+                <td {...restProps}>{child}</td>
+              );
+            })
           ) : (
-            <td {...restProps}>{child}</td>
-          );
-        })}
-      </tr>
-    ) : (
-      <tr {...restProps}>
-        {children}
+            children
+          )
+        }
       </tr>
     );
   }
