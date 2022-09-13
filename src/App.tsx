@@ -33,7 +33,7 @@ function App() {
       dataIndex: "key",
       title: "Key",
     },
-  ];
+];
 
   const dataSourceRaw = new Array(5).fill({}).map((item, index) => ({
     // This will be transformed into `data-row-key` of props.
@@ -72,25 +72,32 @@ function App() {
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-        components={{
-          body: {
-            wrapper: DraggableWrapper,
-            row: DraggableRow,
-          },
-        }}
-      />
-      {/* Render overlay component. */}
-      <DragOverlay>{activeId ? activeId : null}</DragOverlay>
-    </DndContext>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          components={{
+            body: {
+              wrapper: DraggableWrapper,
+              row: DraggableRow,
+            },
+          }}
+        />
+        {/* Render overlay component. */}
+        <DragOverlay>
+          <Table
+            columns={columns}
+            showHeader={false}
+            dataSource={activeId ? new Array(1).fill(dataSource[dataSource.findIndex((item) => item.key === activeId)]) : []}
+            pagination={false}
+          />
+        </DragOverlay>
+      </DndContext>
   );
 
   function DraggableWrapper(props: any) {
