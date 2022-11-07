@@ -33,7 +33,7 @@ function App() {
       dataIndex: "key",
       title: "Key",
     },
-];
+  ];
 
   const dataSourceRaw = new Array(5).fill({}).map((item, index) => ({
     // This will be transformed into `data-row-key` of props.
@@ -72,32 +72,40 @@ function App() {
   }
 
   return (
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-      >
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        components={{
+          body: {
+            wrapper: DraggableWrapper,
+            row: DraggableRow,
+          },
+        }}
+      />
+      {/* Render overlay component. */}
+      <DragOverlay>
         <Table
           columns={columns}
-          dataSource={dataSource}
-          components={{
-            body: {
-              wrapper: DraggableWrapper,
-              row: DraggableRow,
-            },
-          }}
+          showHeader={false}
+          dataSource={
+            activeId
+              ? new Array(1).fill(
+                  dataSource[
+                    dataSource.findIndex((item) => item.key === activeId)
+                  ]
+                )
+              : []
+          }
+          pagination={false}
         />
-        {/* Render overlay component. */}
-        <DragOverlay>
-          <Table
-            columns={columns}
-            showHeader={false}
-            dataSource={activeId ? new Array(1).fill(dataSource[dataSource.findIndex((item) => item.key === activeId)]) : []}
-            pagination={false}
-          />
-        </DragOverlay>
-      </DndContext>
+      </DragOverlay>
+    </DndContext>
   );
 
   function DraggableWrapper(props: any) {
@@ -109,7 +117,11 @@ function App() {
      */
     return (
       <SortableContext
-        items={children[1] instanceof Array ? children[1].map((child: any) => child.key) : []}
+        items={
+          children[1] instanceof Array
+            ? children[1].map((child: any) => child.key)
+            : []
+        }
         strategy={verticalListSortingStrategy}
         {...restProps}
       >
@@ -124,32 +136,27 @@ function App() {
   }
 
   function DraggableRow(props: any) {
-    const { attributes, listeners, setNodeRef, isDragging, overIndex, index } = useSortable({
-      id: props["data-row-key"],
-    });
-    const isOver = overIndex === index
+    const { attributes, listeners, setNodeRef, isDragging, overIndex, index } =
+      useSortable({
+        id: props["data-row-key"],
+      });
+    const isOver = overIndex === index;
     const { children, ...restProps } = props;
     const isData = children instanceof Array;
     const style = {
       ...restProps?.style,
       ...(isData && isDragging ? { background: "#80808038" } : {}),
-      ...(isData && isOver ? { borderTop: "5px solid #ec161638" } : {})
-    }
+      ...(isData && isOver ? { borderTop: "5px solid #ec161638" } : {}),
+    };
     /**
      * 'children[1]` is a row of `dataSource`
      * Check if `children[1]` is an array
      * because antd gives 'No Data' element when `dataSource` is an empty array
      */
     return (
-      <tr
-        ref={setNodeRef}
-        {...attributes}
-        {...restProps}
-        style={style}
-      >
-        {
-          children instanceof Array ? (
-            children.map((child: any) => {
+      <tr ref={setNodeRef} {...attributes} {...restProps} style={style}>
+        {children instanceof Array
+          ? children.map((child: any) => {
               const { children, key, ...restProps } = child;
               return key === "dragHandle" ? (
                 <td {...listeners} {...restProps}>
@@ -159,10 +166,7 @@ function App() {
                 <td {...restProps}>{child}</td>
               );
             })
-          ) : (
-            children
-          )
-        }
+          : children}
       </tr>
     );
   }
